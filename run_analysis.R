@@ -12,24 +12,39 @@ featlist <- feats[, 2]
 
 ## Renames activity list
 actlist <- c("Walking", "Walking upstairs", "Walking downstairs", "Sitting", "Standing", "Laying")
-vectest <- testlab[, 1]        # Coerce data frame into
-vectrain <- trainlab[, 1]      # vectors
+vectest <- testlab[, 1]               # Coerce data frame into
+vectrain <- trainlab[, 1]             # vectors
 for (i in 1:6) {
     vectest <- sub(i, actlist[i], vectest)
     vectrain <- sub(i, actlist[i], vectrain)
 }
-testlab <- as.data.frame(vectest, stringsAsFactors = FALSE)       # Coerce vectors back into
-trainlab <- as.data.frame(vectrain, stringsAsFactors = FALSE)     # data frames
+testlab <- as.data.frame(vectest, stringsAsFactors = FALSE)        # Coerce vectors back into
+trainlab <- as.data.frame(vectrain, stringsAsFactors = FALSE)      # data frames
 
 ## Merge training and test sets into one data set
-testdat <- cbind(testsub, testlab, test)    # Create test set
-traindat <- cbind(trainsub, trainlab, train)   # Create training set
+testdat <- cbind(testsub, testlab, test)         # Create test set
+traindat <- cbind(trainsub, trainlab, train)       # Create training set
 nam <- c("Subject", "Activity", featlist)
-names(testdat) <- nam         # Rename variables according to
-names(traindat) <- nam        # features list
-data <- rbind(traindat, testdat)     # Merge test and training set
+names(testdat) <- nam           # Rename variables according to
+names(traindat) <- nam          # features list
+data <- rbind(traindat, testdat)       # Merge test and training set
 
 ## Extract only measurements on the mean and standard deviation
 k <- grep("mean\\(\\)|std\\(\\)", featlist)
-datams <- data[c(1, 2, k+2)]    # Takes the first two columns, plus the columns
-                                # with mean() and std()
+datams <- data[c(1, 2, k+2)]         # Takes the first two columns, plus the 
+                                     # columns with mean() and std()
+## datams is the tidy dataset for the first part
+
+## Splits datams according to activity and subject
+a <- split(datams, datams$Activity)
+s <- split(datams, datams$Subject)
+## Use sapply to apply means to every column (except Subject and Activity)
+acts <- sapply(a, function(x) {colMeans(x[, -(1:2), drop=FALSE])})
+subs <- sapply(s, function(x) {colMeans(x[, -(1:2), drop=FALSE])})
+## sapply coerces the values into a matrix, but the subjects and activities
+## become columns, use transpose, t() to make them rows
+acts <- t(acts)
+subs <- t(subs)
+avgs <- rbind(acts, subs)         # Merges the averages for each activity 
+                                  # and each subject
+## avgs is the dataset with averages for each activity and each subject
