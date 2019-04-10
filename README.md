@@ -15,3 +15,6 @@ The separated subject list, activity list and values list are then merged to cre
 The data set above is then split according to "Subject" and "Activity", and *sapply* is used to calculate the average for each variable. Transposing, *t()*, is done since *sapply* coerces the values into a matrix, but the subjects and activities become columns. This creates two tables, **acts** and **subs** that contains averages of each variable for each activity and each subject respectively.
 
 Finally, **acts** and **subs** are merged so that it can be written into a .txt file with the rows for activities at the top.
+
+Original data set obtained from:
+Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. [Human Activity Recognition Using Smartphones Data Set](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones).
