@@ -9,6 +9,7 @@ trainsub <- read.table("./UCI.HAR.Dataset/train/subject_train.txt", colClasses="
 ## Read feature list
 feats <- read.table("./UCI.HAR.Dataset/features.txt", colClasses="character")
 featlist <- feats[, 2]
+gsub("BodyBody", "Body", featlist)       # Fix some erreneous variable names
 
 ## Renames activity list
 actlist <- c("Walking", "Walking upstairs", "Walking downstairs", "Sitting", "Standing", "Laying")
@@ -43,8 +44,9 @@ acts <- sapply(a, function(x) {colMeans(x[, -(1:2), drop=FALSE])})
 subs <- sapply(s, function(x) {colMeans(x[, -(1:2), drop=FALSE])})
 ## sapply coerces the values into a matrix, but the subjects and activities
 ## become columns, use transpose, t() to make them rows
-acts <- t(acts)
-subs <- t(subs)
-avgs <- rbind(acts, subs)         # Merges the averages for each activity 
-                                  # and each subject
-## avgs is the dataset with averages for each activity and each subject
+acts <- t(acts)           # Table of averages for each activity
+subs <- t(subs)           # Table of averages for each subject
+
+# Merges the averages for each activity and subject for writing to txt file
+avgs <- rbind(acts, subs)         
+write.table(avgs, "dataset.txt", row.names = FALSE)
