@@ -16,5 +16,5 @@ The data set above is then split according to "Subject" and "Activity", and *sap
 
 Finally, **acts** and **subs** are merged so that it can be written into a .txt file with the rows for activities at the top.
 
-Original data set obtained from:
+Original data set obtained from:  
 Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. [Human Activity Recognition Using Smartphones Data Set](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones).
