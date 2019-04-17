@@ -9,7 +9,7 @@ trainsub <- read.table("./UCI.HAR.Dataset/train/subject_train.txt", colClasses="
 ## Read feature list
 feats <- read.table("./UCI.HAR.Dataset/features.txt", colClasses="character")
 featlist <- feats[, 2]
-gsub("BodyBody", "Body", featlist)       # Fix some erreneous feature names
+featlist <- gsub("BodyBody", "Body", featlist)       # Fix some erreneous feature names
 
 ## Renames activity list
 actlist <- c("Walking", "Walking upstairs", "Walking downstairs", "Sitting", "Standing", "Laying")
